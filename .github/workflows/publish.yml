@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.10']
+        python-version: ['3.11', '3.12']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,9 +45,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Fetching latest release info (unauthenticated)..."
+          echo "Fetching latest release info..."
           release_info=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/nerfstudio-project/gsplat/releases/latest)
+            https://api.github.com/repos/${{ github.repository }}/releases/latest)
 
           # Extract the "upload_url" field and strip the {?name,label} part
           upload_url=$(echo "$release_info" | grep '"upload_url":' | cut -d '"' -f 4 | sed 's/{.*//')
@@ -85,33 +85,32 @@ jobs:
           publish_dir: ./whl
           destination_dir: whl
           keep_files: false
-          cname: docs.gsplat.studio
 
-  upload_pypi:
-    name: Upload to PyPi
-    needs: [build_wheels]
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+  # upload_pypi:
+  #   name: Upload to PyPi
+  #   needs: [build_wheels]
+  #   runs-on: ubuntu-latest
+  #   environment: production
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         submodules: recursive
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.10'
       
-      - name: Install dependencies
-        run: |
-          python -m pip install build twine
-        shell: bash
+  #     - name: Install dependencies
+  #       run: |
+  #         python -m pip install build twine
+  #       shell: bash
 
-      - name: Publish package to PyPI
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          BUILD_NO_CUDA=1 python -m build
-          twine upload --username __token__ --password $PYPI_TOKEN dist/*
-        shell: bash
+  #     - name: Publish package to PyPI
+  #       env:
+  #         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+  #       run: |
+  #         BUILD_NO_CUDA=1 python -m build
+  #         twine upload --username __token__ --password $PYPI_TOKEN dist/*
+  #       shell: bash

@@ -13,9 +13,7 @@ gsplat is an open-source library for CUDA accelerated rasterization of gaussians
 
 ## News
 
-### Unreleased
-
-Changes on `main` since the [v1.5.3](https://github.com/nerfstudio-project/gsplat/releases/tag/v1.5.3) tag (not yet on PyPI).
+### v1.5.4
 
 - [Jun 2026] **G-SHARP** -- dynamic surgical-scene reconstruction for Gaussian splatting.
 - [Jun 2026] **New camera & sensor support** in the sensors library: pinhole, FTheta, fisheye, and LiDAR models.
@@ -37,20 +35,14 @@ Changes on `main` since the [v1.5.3](https://github.com/nerfstudio-project/gspla
 - [Mar 2026] **3DGUT** extensions: [external distortion](https://github.com/nerfstudio-project/gsplat/pull/886) (e.g. windshield-style rigs), optional **per-ray** inputs with gradients, optional **ray-normal** outputs, and refactored render modes / extra signals (see [3DGUT notes](docs/3dgut.md)).
 - [Jan 2026] [PPISP](https://research.nvidia.com/labs/sil/projects/ppisp/) is integrated as an alternative way of bilateral grid to compensate the training views.
 
-### v1.5.3
-
-- [May 2025] Arbitrary batching (over multiple scenes and multiple viewpoints) is supported now!! Checkout the [batching guide](docs/batch.md) for more details! Kudos to [Junchen Liu](https://junchenliu77.github.io/).
-- [May 2025] [Jonathan Stephens](https://x.com/jonstephens85) makes a great [tutorial video](https://www.youtube.com/watch?v=ACPTiP98Pf8) for Windows users on how to install gsplat and get start with 3DGUT.
-- [April 2025] [NVIDIA 3DGUT](https://research.nvidia.com/labs/toronto-ai/3DGUT/) is now integrated in gsplat! Checkout the [3DGUT integration guide](docs/3dgut.md) for more details. [[NVIDIA Tech Blog]](https://developer.nvidia.com/blog/revolutionizing-neural-reconstruction-and-rendering-in-gsplat-with-3dgut/) [[NVIDIA Sweepstakes]](https://www.nvidia.com/en-us/research/3dgut-sweepstakes/)
-
 ## Installation
 
 **Dependence**: Please install [Pytorch](https://pytorch.org/get-started/locally/) first.
 
-The easiest way is to install from PyPI. In this way it will build the CUDA code **on the first run** (JIT).
+The easiest way is to install from Github release. In this way it will build the CUDA code **on the first run** (JIT).
 
 ```bash
-pip install gsplat
+pip install gsplat==1.5.4 --find-links https://lihanchen2004.github.io/gsplat/whl/pt211cu128/
 ```
 
 Alternatively you can install gsplat from source. In this way it will build the CUDA code during installation.
